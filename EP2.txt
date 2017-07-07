@@ -1,0 +1,42 @@
+EP2 de OCD (Grupos de 2 ou 3 alunos)
+
+Criar um programa em Java que simule os sinais de controle enviados pela UC (com um microprogama com palavras horizontais) para executar instruções em assembly (como se estivessem armazenadas na memória principal). O microprograma deve ser lido e executado durante cada passo dessa simulação e deve enviar os sinais de controle adequados para outros elementos do sistema simulado que só então, ao receber esses sinais, devem responder da forma correta.
+
+Podem assumir que o código sempre será executado com a primeira instrução começando em zero.
+
+O processador simulado deve contar com 4 registradores de uso geral (AX, BX, CX e DX), além dos outros necessários para o funcionamento do sistema (IR, PC, MAR, MBR, Flags). Não haverá interação com dispositivos de IO no EP, portanto não é necessário acrescentar os registradores IOAR e IOBR.
+
+Seu programa deve ser capaz de simular a execução das seguintes instruções (sem uso de labels - endereços serão usados diretamente - e com funcionamento similar ao do assembly do 8086):
+
+MOV - de registrador para registrador
+    - de registrador para memória (com endereço fixo ou em registrador)
+    - de memória para registrador (com endereço fixo ou em registrador)
+(Não há necessidade de ciclo de indireção)
+
+ADD, SUB, MUL, DIV
+INC, DEC
+CMP
+(Todas essas operações com registradores e constantes mas não com endereços de memória e não é preciso utilizar as operações feitas no EP1, podem simplesmente utilizar os operadores aritméticos e lógicos de Java.)
+
+JMP, JE, JNE, JG, JL, JGE, JLE
+&, |
+
+Todas as instruções seguirão o seguinte formato: comando com uma ou duas letras em maiúsculas, seguido por um espaço, seguido pelos parâmetros separados por uma vírgula (sem espaço), seguido por um enter (line break e carriage return).
+
+O programa deve permitir que o usuário execute cada micro-operação de cada vez. A cada um desses passos, deve mostrar o estado atual de todos os registradores (de uso geral e do sistema, inclusive as flags zero, sinal e overflow - não é necessário simular as outras flags), qual micro-operação está sendo executada, quais sinais de controle são enviados e a linha do microprograma que corresponde àquela micro-operação.
+
+O EP deve começar pela especificação (apresentada no relatório), pelo grupo, de diversos elementos, como:
+- A organização do hardware (mostrar um diagrama similar ao apresentado em aula)
+- Os opcodes para cada instrução
+- Códigos (ou endereços) dos registradores gerais
+- Tamanho da palavra e de cada instrução (usar instruções e tamanho fixo, escolher um tamanho de palavra que comporte a maior instrução e lembrar e incrementar o PC com o número de bytes correto, assumindo que a memória principal permite o endereçamento de cada byte)
+- Códigos das operações da ULA
+- Condições de pulo do firmware
+
+Além dessas especificações, o relatório deve conter as seguintes informações:
+- Como ler o código
+- Como usar o programa
+- Que testes foram feitos (todas as instruções devem ser testadas, não é preciso se preocupar com entradas ilegais) e quais os resultados
+- Problemas encontrados
+- "Referências" consultadas
+ 
