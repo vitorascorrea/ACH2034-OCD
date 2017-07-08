@@ -26,7 +26,7 @@ public class CPU{
   // MBR (contém uma palavra a ser escrita na memória ou a lida mais recentemente)
   private int mbr = 0;
   // IR (contém a última instrução buscada)
-  private int ir = 0;
+  private String ir = "";
 
   //Flags
   // Zero-flag
@@ -47,10 +47,7 @@ public class CPU{
 
   public String fetchFromMemory(){
     int current_pc = this.getPc();
-    String fetch = memory[current_pc];
-    if(fetch != null && !isNumber(fetch)){
-      this.setIr(current_pc - 1);
-    }
+    String fetch = this.memory[current_pc];
     this.setPc(current_pc + 1);
     return fetch;
   }
@@ -549,7 +546,7 @@ public class CPU{
     System.out.println("Registradores de uso geral:");
     System.out.println("AX: " + this.getAx() + " - BX: " + this.getBx() + " - CX: " + this.getCx() + " - DX: " + this.getDx());
     System.out.println("Registradores de uso específico:");
-    System.out.println("PC: [" + this.getPc() + "] - IR: [" + this.getIr() + "] - MBR: " + this.getMbr() + " - MAR: " + this.getMar());
+    System.out.println("PC: [" + this.getPc() + "] - IR: " + this.getIr() + " - MBR: " + this.getMbr() + " - MAR: " + this.getMar());
     System.out.println("Flags:");
     System.out.println("ZF: " + this.getZf() + " - SF: " + this.getSf() + " - OF: " + this.getOf());
   }
@@ -610,11 +607,11 @@ public class CPU{
 		this.mbr = mbr;
 	}
 
-	public int getIr() {
+	public String getIr() {
 		return ir;
 	}
 
-	public void setIr(int ir) {
+	public void setIr(String ir) {
 		this.ir = ir;
 	}
 

@@ -109,6 +109,7 @@ public class EP2OCD{
       formatted_instruction[0] = instruction_head.split(",")[0];
       formatted_instruction[1] = cpu.fetchFromMemory();
       if(formatted_instruction.length > 2) formatted_instruction[2] = cpu.fetchFromMemory();
+      cpu.setIr(String.join(", ", formatted_instruction).replaceFirst(", ", " "));
       return formatted_instruction;
     }catch(Exception e){
       return null;
@@ -160,7 +161,7 @@ public class EP2OCD{
       System.out.println();
     }
     System.out.print("Instrução: ");
-    System.out.println(String.join(",", instruction));
+    System.out.println(String.join(", ", instruction).replaceFirst(", ", " "));
     cpu.printSystemStatus();
     System.out.print("(Pressione Enter para a próxima instrução)");
     Scanner next = new Scanner(System.in);
