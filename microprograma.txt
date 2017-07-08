@@ -1,8 +1,0 @@
-MOV B, 2
-MOV C, 3
-MOV A, 1
-CMP C, 0
-JE [256]
-MUL B
-DEC C
-JNE [9]
