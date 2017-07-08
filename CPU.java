@@ -22,7 +22,7 @@ public class CPU{
   // PC (contém o endereço a ser buscado na próxima instrução)
   private int pc = 0;
   // MAR (contém o endereço de uma posição da memória)
-  private int mar = 0;
+  private String mar = "";
   // MBR (contém uma palavra a ser escrita na memória ou a lida mais recentemente)
   private int mbr = 0;
   // IR (contém a última instrução buscada)
@@ -48,7 +48,10 @@ public class CPU{
   public String fetchFromMemory(){
     int current_pc = this.getPc();
     String fetch = memory[current_pc];
-    setPc(current_pc + 1);
+    if(fetch != null && !isNumber(fetch)){
+      this.setIr(current_pc - 1);
+    }
+    this.setPc(current_pc + 1);
     return fetch;
   }
 
@@ -121,20 +124,25 @@ public class CPU{
 
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_reg = "";
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
     if(instruction[2].contains("[")){ //é um endereço de memória
       src_memory_index = Integer.parseInt(instruction[2].replace("[","").replace("]",""));
       src_val = Integer.parseInt(this.memory[src_memory_index]);
+      this.setMbr(src_val);
       src_reg = "";
     }else if(isNumber(instruction[2])){ //é uma constante
       src_val = Integer.parseInt(instruction[2]);
+      this.setMbr(src_val);
     }else{ //é um registrador
       src_val = this.getRegVal(instruction[2]);
+      this.setMbr(src_val);
       src_reg = instruction[2];
     }
 
@@ -156,23 +164,27 @@ public class CPU{
 
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_val = Integer.parseInt(this.memory[dst_memory_index]);
       dst_reg = "";
     }else if(isNumber(instruction[1])){ //é uma constante
       dst_val = Integer.parseInt(instruction[1]);
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
     if(instruction[2].contains("[")){ //é um endereço de memória
       src_memory_index = Integer.parseInt(instruction[2].replace("[","").replace("]",""));
       src_val = Integer.parseInt(this.memory[src_memory_index]);
+      this.setMbr(src_val);
       src_reg = "";
     }else if(isNumber(instruction[2])){ //é uma constante
       src_val = Integer.parseInt(instruction[2]);
     }else{ //é um registrador
       src_val = this.getRegVal(instruction[2]);
+      this.setMbr(src_val);
       src_reg = instruction[2];
     }
 
@@ -192,9 +204,11 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_reg = "";
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
@@ -217,9 +231,11 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_reg = "";
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
@@ -245,20 +261,24 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_reg = "";
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
     if(instruction[2].contains("[")){ //é um endereço de memória
       src_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[2].replace("[","").replace("]",""))]);
       src_memory_index = Integer.parseInt(instruction[2].replace("[","").replace("]",""));
+      this.setMbr(src_val);
       src_reg = "";
     }else if(isNumber(instruction[2])){ //é uma constante
       src_val = Integer.parseInt(instruction[2]);
     }else{ //é um registrador
       src_val = this.getRegVal(instruction[2]);
+      this.setMbr(src_val);
       src_reg = instruction[2];
     }
 
@@ -284,20 +304,24 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_reg = "";
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
     if(instruction[2].contains("[")){ //é um endereço de memória
       src_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[2].replace("[","").replace("]",""))]);
       src_memory_index = Integer.parseInt(instruction[2].replace("[","").replace("]",""));
+      this.setMbr(src_val);
       src_reg = "";
     }else if(isNumber(instruction[2])){ //é uma constante
       src_val = Integer.parseInt(instruction[2]);
     }else{ //é um registrador
       src_val = this.getRegVal(instruction[2]);
+      this.setMbr(src_val);
       src_reg = instruction[2];
     }
 
@@ -323,20 +347,24 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_reg = "";
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
     if(instruction[2].contains("[")){ //é um endereço de memória
       src_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[2].replace("[","").replace("]",""))]);
       src_memory_index = Integer.parseInt(instruction[2].replace("[","").replace("]",""));
+      this.setMbr(src_val);
       src_reg = "";
     }else if(isNumber(instruction[2])){ //é uma constante
       src_val = Integer.parseInt(instruction[2]);
     }else{ //é um registrador
       src_val = this.getRegVal(instruction[2]);
+      this.setMbr(src_val);
       src_reg = instruction[2];
     }
 
@@ -362,20 +390,24 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
       dst_reg = "";
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
       dst_reg = instruction[1];
     }
 
     if(instruction[2].contains("[")){ //é um endereço de memória
       src_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[2].replace("[","").replace("]",""))]);
       src_memory_index = Integer.parseInt(instruction[2].replace("[","").replace("]",""));
+      this.setMbr(src_val);
       src_reg = "";
     }else if(isNumber(instruction[2])){ //é uma constante
       src_val = Integer.parseInt(instruction[2]);
     }else{ //é um registrador
       src_val = this.getRegVal(instruction[2]);
+      this.setMbr(src_val);
       src_reg = instruction[2];
     }
 
@@ -398,13 +430,15 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
     }else if(isNumber(instruction[1])){ //é uma constante
       dst_val = Integer.parseInt(instruction[1]);
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
     }
-
     int op_result = dst_val * this.getRegVal("A");
+    this.setMbr(op_result);
 
     //A operação sempre será com o registrador Ax
     this.setRegVal("A", op_result);
@@ -420,13 +454,15 @@ public class CPU{
     if(instruction[1].contains("[")){ //é um endereço de memória
       dst_val = Integer.parseInt(this.memory[Integer.parseInt(instruction[1].replace("[","").replace("]",""))]);
       dst_memory_index = Integer.parseInt(instruction[1].replace("[","").replace("]",""));
+      this.setMar("[" + dst_memory_index + "]");
     }else if(isNumber(instruction[1])){ //é uma constante
       dst_val = Integer.parseInt(instruction[1]);
     }else{ //é um registrador
       dst_val = this.getRegVal(instruction[1]);
+      this.setMar("[" + instruction[1] + "]");
     }
-
     int op_result = dst_val / this.getRegVal("A");
+    this.setMbr(op_result);
 
     //A operação sempre será com o registrador Ax
     this.setRegVal("A", op_result);
@@ -510,8 +546,10 @@ public class CPU{
   }
 
   public void printSystemStatus(){
-    System.out.println("Registradores:");
+    System.out.println("Registradores de uso geral:");
     System.out.println("AX: " + this.getAx() + " - BX: " + this.getBx() + " - CX: " + this.getCx() + " - DX: " + this.getDx());
+    System.out.println("Registradores de uso específico:");
+    System.out.println("PC: [" + this.getPc() + "] - IR: [" + this.getIr() + "] - MBR: " + this.getMbr() + " - MAR: " + this.getMar());
     System.out.println("Flags:");
     System.out.println("ZF: " + this.getZf() + " - SF: " + this.getSf() + " - OF: " + this.getOf());
   }
@@ -556,11 +594,11 @@ public class CPU{
 		this.pc = pc;
 	}
 
-	public int getMar() {
+	public String getMar() {
 		return mar;
 	}
 
-	public void setMar(int mar) {
+	public void setMar(String mar) {
 		this.mar = mar;
 	}
 
